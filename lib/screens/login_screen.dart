@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: _onLoginPressed,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF9CE54D),
+                              backgroundColor: const Color(0xFFAAF724),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -205,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Text('¿Aun no tienes cuenta?'),
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).push(
+                              Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (context) => RegisterScreen(),
                                 ),

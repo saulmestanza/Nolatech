@@ -4,6 +4,7 @@ import 'package:nolatech/bloc/auth/auth_bloc.dart';
 import 'package:nolatech/bloc/auth/auth_event.dart';
 import 'package:nolatech/bloc/auth/auth_state.dart';
 import 'package:nolatech/screens/home_screen.dart';
+import 'package:nolatech/screens/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -221,7 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: ElevatedButton(
                             onPressed: _onCreatePressed,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF9CE54D),
+                              backgroundColor: const Color(0xFFAAF724),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -245,7 +246,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const Text('Ya tengo cuenta'),
                           TextButton(
                             onPressed: () {
-                              //
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ),
+                              );
                             },
                             child: const Text(
                               'Iniciar sesión',

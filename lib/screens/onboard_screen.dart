@@ -12,21 +12,13 @@ class OnboardingScreen extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Background image
           Image.asset('assets/images/login_background.png', fit: BoxFit.cover),
-
-          // Foreground UI
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const SizedBox(height: 100),
-
-              // SVG logo
               SvgPicture.asset('assets/svg/LOGO.svg', width: 220),
-
               const Spacer(),
-
-              // Buttons
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,
@@ -45,7 +37,7 @@ class OnboardingScreen extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF9CE54D),
+                          backgroundColor: const Color(0xFFAAF724),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -73,7 +65,7 @@ class OnboardingScreen extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF89B9E0),
+                          backgroundColor: const Color(0xFF9B9C9D),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
