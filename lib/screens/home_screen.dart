@@ -179,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }),
         ),
       ),
-      body: _pages[_currentIndex],
+      body: Container(color: Colors.white, child: _pages[_currentIndex]),
       /*body: BlocConsumer<AuthBloc, AuthState>(
         builder: (context, state) {
           return Container(color: Colors.black);

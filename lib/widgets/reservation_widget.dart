@@ -67,39 +67,46 @@ class ReservationWidget extends StatelessWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.person, size: 14, color: Colors.grey),
+                    Text(
+                      'Reservado por:',
+                      style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                    ),
+                    const SizedBox(width: 4),
+                    CircleAvatar(
+                      radius: 10,
+                      backgroundImage: NetworkImage('https://i.pravatar.cc/50'),
+                    ),
                     const SizedBox(width: 4),
                     Text(
-                      'Reservado por: $userName',
+                      userName,
+                      style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(Icons.access_time, size: 14, color: Colors.grey),
+                    const SizedBox(width: 4),
+                    Text(
+                      duration,
+                      style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+                    ),
+                    SizedBox(
+                      height: 10,
+                      child: VerticalDivider(
+                        thickness: 1,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                    Text(
+                      price,
                       style: TextStyle(fontSize: 13, color: Colors.grey[700]),
                     ),
                   ],
                 ),
               ],
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.access_time, size: 14, color: Colors.grey),
-                  const SizedBox(width: 4),
-                  Text(
-                    duration,
-                    style: TextStyle(fontSize: 13, color: Colors.grey[700]),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Text(
-                price,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
           ),
         ],
       ),
