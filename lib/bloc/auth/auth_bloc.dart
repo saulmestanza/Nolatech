@@ -9,27 +9,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this.authRepository) : super(AuthInitial()) {
     on<CheckAuthStatus>((event, emit) async {
       final isLoggedIn = await authRepository.isLoggedIn();
-      emit(isLoggedIn ? Authenticated() : Unauthenticated());
+      final user = await authRepository.getLoggedUser();
+      emit(isLoggedIn ? Authenticated(user) : Unauthenticated());
     });
 
     on<RegisterUser>((event, emit) async {
       emit(AuthLoading());
       final success = await authRepository.register(
-        name: event.name,
-        email: event.email,
-        phone: event.phone,
-        password: event.password,
+        event.name,
+        event.email,
+        event.phone,
+        event.password,
       );
       if (success) {
         await authRepository.login(event.email, event.password);
       }
-      emit(success ? Authenticated() : AuthError("Utilice otro correo."));
+      final user = await authRepository.getLoggedUser();
+      emit(success ? Authenticated(user) : AuthError("Utilice otro correo."));
     });
 
     on<LoginUser>((event, emit) async {
       emit(AuthLoading());
       final success = await authRepository.login(event.email, event.password);
-      emit(success ? Authenticated() : AuthError("Credenciales inválidas."));
+      final user = await authRepository.getLoggedUser();
+      emit(
+        success ? Authenticated(user) : AuthError("Credenciales inválidas."),
+      );
     });
 
     on<LogoutUser>((event, emit) async {

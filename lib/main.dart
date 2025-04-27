@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       home: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is Authenticated) {
-            return const HomeScreen();
+            return HomeScreen(userModel: state.user);
           } else if (state is Unauthenticated) {
             return const OnboardingScreen();
           } else {

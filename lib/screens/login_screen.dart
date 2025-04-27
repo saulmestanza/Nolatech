@@ -38,7 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is Authenticated) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(
+                builder: (context) => HomeScreen(userModel: state.user),
+              ),
             );
           } else if (state is AuthError) {
             ScaffoldMessenger.of(
@@ -67,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: CircleAvatar(
-                      backgroundColor: const Color(0xFF9CE54D),
+                      backgroundColor: const Color.fromARGB(255, 115, 180, 46),
                       child: IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white),
                         onPressed: () => Navigator.of(context).pop(),
@@ -181,7 +183,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: _onLoginPressed,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFAAF724),
+                              backgroundColor: const Color.fromARGB(
+                                255,
+                                115,
+                                180,
+                                46,
+                              ),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),

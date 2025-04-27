@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:nolatech/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -33,12 +34,12 @@ class AuthRepository {
     return sha256.convert(bytes).toString();
   }
 
-  Future<bool> register({
-    required String name,
-    required String email,
-    required String phone,
-    required String password,
-  }) async {
+  Future<bool> register(
+    String name,
+    String email,
+    String phone,
+    String password,
+  ) async {
     final hashedPassword = hashPassword(password);
     try {
       await _db!.insert('users', {
@@ -51,6 +52,15 @@ class AuthRepository {
     } catch (e) {
       return false;
     }
+  }
+
+  Future<UserModel?> getUserById(int id) async {
+    final result = await _db!.query('users', where: 'id = ?', whereArgs: [id]);
+    if (result.isNotEmpty) {
+      final userModel = UserModel.fromMap(result.first);
+      return userModel;
+    }
+    return null;
   }
 
   Future<bool> login(String email, String password) async {
@@ -68,6 +78,11 @@ class AuthRepository {
       return true;
     }
     return false;
+  }
+
+  Future<UserModel?> getLoggedUser() async {
+    final userId = await getLoggedUserId();
+    return await getUserById(userId);
   }
 
   Future<int> getLoggedUserId() async {
