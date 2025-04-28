@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CourtWidget extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String type;
-  final String date;
-  final String availability;
-  final String timeRange;
-  final VoidCallback onReserve;
+  final bool availability;
+  final DateTime startTime;
+  final DateTime endTime;
+  final VoidCallback? onReserve;
 
   const CourtWidget({
     super.key,
     required this.imageUrl,
     required this.title,
     required this.type,
-    required this.date,
+    required this.startTime,
     required this.availability,
-    required this.timeRange,
+    required this.endTime,
     required this.onReserve,
   });
 
@@ -71,7 +72,7 @@ class CourtWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        date,
+                        DateFormat('EEEE, d MMM, yyyy').format(startTime),
                         style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                       ),
                     ],
@@ -80,7 +81,7 @@ class CourtWidget extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        availability,
+                        availability ? "Disponible" : "No Disponible",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.green[700],
@@ -95,7 +96,7 @@ class CourtWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        timeRange,
+                        "${DateFormat('Hm').format(startTime)} - ${DateFormat('Hm').format(endTime)}",
                         style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                       ),
                     ],

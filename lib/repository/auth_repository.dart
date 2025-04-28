@@ -1,33 +1,13 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:nolatech/models/user_model.dart';
+import 'package:nolatech/repository/db_init.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
-class AuthRepository {
+class AuthRepository extends DbInit {
   Database? _db;
   SharedPreferences? _prefs;
-
-  Future<void> init() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'app.db');
-    _db = await openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute('''
-          CREATE TABLE users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            email TEXT UNIQUE,
-            phone TEXT,
-            password TEXT
-          )
-        ''');
-      },
-    );
-  }
 
   String hashPassword(String password) {
     final bytes = utf8.encode(password);
@@ -42,6 +22,7 @@ class AuthRepository {
   ) async {
     final hashedPassword = hashPassword(password);
     try {
+      _db = _db ?? await super.db;
       await _db!.insert('users', {
         'name': name,
         'email': email,
@@ -55,6 +36,7 @@ class AuthRepository {
   }
 
   Future<UserModel?> getUserById(int id) async {
+    _db = _db ?? await super.db;
     final result = await _db!.query('users', where: 'id = ?', whereArgs: [id]);
     if (result.isNotEmpty) {
       final userModel = UserModel.fromMap(result.first);
@@ -64,6 +46,7 @@ class AuthRepository {
   }
 
   Future<bool> login(String email, String password) async {
+    _db = _db ?? await super.db;
     final hashed = hashPassword(password);
     final result = await _db!.query(
       'users',

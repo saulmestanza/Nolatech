@@ -3,17 +3,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nolatech/bloc/auth/auth_bloc.dart';
 import 'package:nolatech/bloc/auth/auth_event.dart';
 import 'package:nolatech/bloc/auth/auth_state.dart';
+import 'package:nolatech/bloc/court/court_bloc.dart';
 import 'package:nolatech/repository/auth_repository.dart';
+import 'package:nolatech/repository/court_repository.dart';
 import 'package:nolatech/screens/home_screen.dart';
 import 'package:nolatech/screens/onboard_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final authRepository = AuthRepository();
-  await authRepository.init();
   runApp(
-    BlocProvider(
-      create: (_) => AuthBloc(authRepository)..add(CheckAuthStatus()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => AuthBloc(AuthRepository())..add(CheckAuthStatus()),
+        ),
+        BlocProvider(create: (_) => CourtBloc(CourtRepository())),
+      ],
       child: const MyApp(),
     ),
   );
