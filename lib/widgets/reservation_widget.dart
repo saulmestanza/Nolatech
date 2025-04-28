@@ -21,6 +21,7 @@ class ReservationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.all(4),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Color(0xFFF5F6FA),
@@ -89,7 +90,7 @@ class ReservationWidget extends StatelessWidget {
                     const Icon(Icons.access_time, size: 14, color: Colors.grey),
                     const SizedBox(width: 4),
                     Text(
-                      duration,
+                      "$duration horas",
                       style: TextStyle(fontSize: 13, color: Colors.grey[700]),
                     ),
                     SizedBox(
@@ -100,7 +101,7 @@ class ReservationWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      price,
+                      "\$$price",
                       style: TextStyle(fontSize: 13, color: Colors.grey[700]),
                     ),
                   ],

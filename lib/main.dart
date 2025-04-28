@@ -4,8 +4,10 @@ import 'package:nolatech/bloc/auth/auth_bloc.dart';
 import 'package:nolatech/bloc/auth/auth_event.dart';
 import 'package:nolatech/bloc/auth/auth_state.dart';
 import 'package:nolatech/bloc/court/court_bloc.dart';
+import 'package:nolatech/bloc/reservation/reservation_bloc.dart';
 import 'package:nolatech/repository/auth_repository.dart';
 import 'package:nolatech/repository/court_repository.dart';
+import 'package:nolatech/repository/reservation_repository.dart';
 import 'package:nolatech/screens/home_screen.dart';
 import 'package:nolatech/screens/onboard_screen.dart';
 
@@ -18,6 +20,7 @@ void main() async {
           create: (_) => AuthBloc(AuthRepository())..add(CheckAuthStatus()),
         ),
         BlocProvider(create: (_) => CourtBloc(CourtRepository())),
+        BlocProvider(create: (_) => ReservationBloc(ReservationRepository())),
       ],
       child: const MyApp(),
     ),

@@ -15,4 +15,25 @@ class CourtRepository extends DbInit {
     }
     return [];
   }
+
+  Future<List<CourtModel>> getAllFavoriteCourts() async {
+    _db = _db ?? await super.db;
+    final result = await _db!.query('courts', where: 'is_favorite = 1');
+    if (result.isNotEmpty) {
+      List<CourtModel> courts =
+          result.map((row) => CourtModel.fromMap(row)).toList();
+      return courts;
+    }
+    return [];
+  }
+
+  Future<void> updateCourt(CourtModel court) async {
+    _db = _db ?? await super.db;
+    await _db!.update(
+      'courts',
+      court.toMap(),
+      where: 'id = ?',
+      whereArgs: [court.id],
+    );
+  }
 }

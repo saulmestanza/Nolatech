@@ -30,7 +30,23 @@ class DbInit {
             date TEXT,
             time_start TEXT,
             time_end TEXT,
-            is_available INTEGER
+            is_available INTEGER,
+            address TEXT,
+            is_favorite INTEGER,
+            price INTEGER
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE reservations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            court_id INTEGER,
+            time INTEGER,
+            date TEXT,
+            start_time TEXT,
+            end_time TEXT,
+            comment TEXT,
+            instructor TEXT
           )
         ''');
         await db.insert('courts', {
@@ -41,42 +57,52 @@ class DbInit {
           'time_start': "12:00:00.000",
           'time_end': "16:00:00.000",
           'is_available': 1,
+          'address': 'Parque Lineal, Guayaquil 090615',
+          'price': 40,
         });
         await db.insert('courts', {
           'title': "Epic Box",
+          'type': "Cancha Tipo B",
+          'imageUrl': "https://picsum.photos/600/300",
+          'date': "2025-04-28",
+          'time_start': "08:00:00.000",
+          'time_end': "10:00:00.000",
+          'is_available': 0,
+          'address': 'Parque Lineal, Guayaquil 090615',
+          'price': 15,
+        });
+        await db.insert('courts', {
+          'title': "Sport Box",
+          'type': "Cancha Tipo B",
+          'imageUrl': "https://picsum.photos/600/300",
+          'date': "2025-04-28",
+          'time_start': "12:00:00.000",
+          'time_end': "16:00:00.000",
+          'is_available': 1,
+          'address': 'R4H2+H4X, Av del Periodista, Guayaquil 090512',
+          'price': 20,
+        });
+        await db.insert('courts', {
+          'title': "Sport Box",
           'type': "Cancha Tipo A",
           'imageUrl': "https://picsum.photos/600/300",
           'date': "2025-04-28",
           'time_start': "08:00:00.000",
           'time_end': "10:00:00.000",
           'is_available': 0,
-        });
-        await db.insert('courts', {
-          'title': "Sport Box",
-          'type': "Cancha Tipo B",
-          'imageUrl': "https://picsum.photos/600/300",
-          'date': "2025-04-28",
-          'time_start': "12:00:00.000",
-          'time_end': "16:00:00.000",
-          'is_available': 1,
-        });
-        await db.insert('courts', {
-          'title': "Sport Box",
-          'type': "Cancha Tipo B",
-          'imageUrl': "https://picsum.photos/600/300",
-          'date': "2025-04-28",
-          'time_start': "08:00:00.000",
-          'time_end': "10:00:00.000",
-          'is_available': 0,
+          'address': 'R4H2+H4X, Av del Periodista, Guayaquil 090512',
+          'price': 25,
         });
         await db.insert('courts', {
           'title': "Ultimate Box",
-          'type': "Cancha Tipo C",
+          'type': "Cancha Tipo B",
           'imageUrl': "https://picsum.photos/600/300",
           'date': "2025-04-28",
           'time_start': "12:00:00.000",
           'time_end': "16:00:00.000",
           'is_available': 1,
+          'address': 'R494+VR7, Av. de las Américas, Guayaquil 090512',
+          'price': 15,
         });
         await db.insert('courts', {
           'title': "Ultimate Box",
@@ -86,6 +112,8 @@ class DbInit {
           'time_start': "08:00:00.000",
           'time_end': "10:00:00.000",
           'is_available': 0,
+          'address': 'R494+VR7, Av. de las Américas, Guayaquil 090512',
+          'price': 50,
         });
       },
       onUpgrade: (db, oldVersion, newVersion) async {

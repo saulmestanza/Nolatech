@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nolatech/bloc/auth/auth_bloc.dart';
 import 'package:nolatech/bloc/auth/auth_event.dart';
+import 'package:nolatech/bloc/court/court_bloc.dart';
+import 'package:nolatech/bloc/court/court_event.dart';
+import 'package:nolatech/bloc/reservation/reservation_bloc.dart';
+import 'package:nolatech/bloc/reservation/reservation_event.dart';
 import 'package:nolatech/models/user_model.dart';
 import 'package:nolatech/screens/favorites_screen.dart';
 import 'package:nolatech/screens/feed_screen.dart';
 import 'package:nolatech/screens/onboard_screen.dart';
-import 'package:nolatech/screens/reserve_screen.dart';
+import 'package:nolatech/screens/schedule_reservations_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final UserModel? userModel;
@@ -25,9 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     _pages = [
       FeedScreen(userModel: widget.userModel),
-      ReserveScreen(),
-      FavoritesScreen(),
+      ScheduleReservationScreen(),
+      FavoritesScreen(userModel: widget.userModel!),
     ];
+    context.read<ReservationBloc>().add(GetAllReservations());
+    context.read<CourtBloc>().add(GetAllCourts());
     super.initState();
   }
 
@@ -35,6 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _currentIndex = index;
     });
+    if (index == 0) {
+      context.read<CourtBloc>().add(GetAllCourts());
+    }
+    if (index == 2) {
+      context.read<CourtBloc>().add(GetAllFavoriteCourts());
+    }
   }
 
   final List<IconData> icons = [
@@ -179,14 +191,12 @@ class _HomeScreenState extends State<HomeScreen> {
           }),
         ),
       ),
-      body: Container(color: Colors.white, child: _pages[_currentIndex]),
-      /*body: BlocConsumer<AuthBloc, AuthState>(
-        builder: (context, state) {
-          return Container(color: Colors.black);
-        },
-        listener: (BuildContext context, AuthState state) {},
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: _pages[_currentIndex],
       ),
-      */
     );
   }
 }

@@ -1,15 +1,10 @@
 class UserModel {
   final int id;
-  final String name;
-  final String email;
-  final String phone;
+  final String? name;
+  final String? email;
+  final String? phone;
 
-  UserModel({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.phone,
-  });
+  UserModel({required this.id, this.name, this.email, this.phone});
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(

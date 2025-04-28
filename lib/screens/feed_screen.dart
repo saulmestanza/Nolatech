@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:nolatech/bloc/court/court_bloc.dart';
-import 'package:nolatech/bloc/court/court_event.dart';
 import 'package:nolatech/bloc/court/court_state.dart';
+import 'package:nolatech/bloc/reservation/reservation_bloc.dart';
+import 'package:nolatech/bloc/reservation/reservation_state.dart';
 import 'package:nolatech/models/user_model.dart';
+import 'package:nolatech/screens/reservation_screen.dart';
 import 'package:nolatech/widgets/court_widget.dart';
+import 'package:nolatech/widgets/reservation_widget.dart';
 
 class FeedScreen extends StatelessWidget {
   final UserModel? userModel;
@@ -32,7 +36,6 @@ class FeedScreen extends StatelessWidget {
             BlocBuilder<CourtBloc, CourtState>(
               builder: (context, state) {
                 if (state is CourtLoading) {
-                  context.read<CourtBloc>().add(GetAllCourts());
                   return Center(child: CircularProgressIndicator());
                 }
                 if (state is CourtLoaded) {
@@ -46,16 +49,25 @@ class FeedScreen extends StatelessWidget {
                         final court = state.courts[index];
 
                         return CourtWidget(
-                          imageUrl: court.imageUrl,
-                          title: court.title,
-                          type: court.type,
-                          startTime: court.startTime,
-                          endTime: court.endTime,
-                          availability: court.isAvailable,
+                          imageUrl: court.imageUrl!,
+                          title: court.title!,
+                          type: court.type!,
+                          startTime: court.startTime!,
+                          endTime: court.endTime!,
+                          availability: court.isAvailable!,
                           onReserve:
-                              court.isAvailable
+                              court.isAvailable!
                                   ? () {
-                                    //
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => ReservationPage(
+                                              court: court,
+                                              user: userModel!,
+                                            ),
+                                      ),
+                                    );
                                   }
                                   : null,
                         );
@@ -71,7 +83,43 @@ class FeedScreen extends StatelessWidget {
               'Reservas programadas',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            // Reservas List
+            BlocBuilder<ReservationBloc, ReservationState>(
+              builder: (context, state) {
+                if (state is ReservationLoading) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (state is ReservationLoaded) {
+                  return Container(
+                    color: Colors.white,
+                    height: 320,
+                    child: ListView.builder(
+                      itemCount: state.reservations.length,
+                      itemBuilder: (context, index) {
+                        final reservation = state.reservations[index];
+
+                        return ReservationWidget(
+                          imageUrl: reservation.courtModel?.imageUrl ?? "",
+                          title: reservation.courtModel?.type ?? "",
+                          userName: reservation.userModel?.name ?? "",
+                          date: DateFormat(
+                            'EEEE, d MMM, yyyy',
+                          ).format(reservation.startTime!),
+                          duration: reservation.time.toString(),
+                          price:
+                              (reservation.time! *
+                                      reservation.courtModel!.price!)
+                                  .toString(),
+                        );
+                      },
+                    ),
+                  );
+                }
+                if (state is ReservationError) {
+                  return Center(child: Text(state.message));
+                }
+                return Offstage();
+              },
+            ),
           ],
         ),
       ),
