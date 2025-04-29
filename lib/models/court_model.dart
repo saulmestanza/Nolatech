@@ -3,6 +3,9 @@ class CourtModel {
   final String? title;
   final String? type;
   final String? imageUrl;
+  final String? weather;
+  final double? latitude;
+  final double? longitude;
   final DateTime? startTime;
   final DateTime? endTime;
   final bool? isAvailable;
@@ -14,7 +17,10 @@ class CourtModel {
     required this.id,
     this.title,
     this.type,
+    this.weather,
     this.imageUrl,
+    this.latitude,
+    this.longitude,
     this.startTime,
     this.endTime,
     this.isAvailable,
@@ -30,6 +36,8 @@ class CourtModel {
       address: map['address'],
       price: map['price'] ?? 0,
       type: map['type'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
       imageUrl: map['imageUrl'],
       isFavorite: map['is_favorite'] == 1 ? true : false,
       isAvailable: map['is_available'] == 1 ? true : false,
@@ -49,6 +57,8 @@ class CourtModel {
       'type': type,
       'imageUrl': imageUrl,
       'address': address,
+      'latitude': latitude,
+      'longitude': longitude,
       'price': price,
       'is_favorite': isFavorite! ? 1 : 0,
       'is_available': isAvailable! ? 1 : 0,
@@ -68,12 +78,18 @@ class CourtModel {
     bool? isAvailable,
     String? address,
     int? price,
+    double? latitude,
+    double? longitude,
+    String? weather,
     bool? isFavorite,
   }) {
     return CourtModel(
       id: id ?? this.id,
       title: title ?? this.title,
       type: type ?? this.type,
+      weather: weather ?? this.weather,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
       isFavorite: isFavorite ?? this.isFavorite,
       imageUrl: imageUrl ?? this.imageUrl,
       startTime: startTime ?? this.startTime,

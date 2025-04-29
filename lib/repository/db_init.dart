@@ -33,7 +33,9 @@ class DbInit {
             is_available INTEGER,
             address TEXT,
             is_favorite INTEGER,
-            price INTEGER
+            price INTEGER,
+            latitude REAL,
+            longitude REAL
           )
         ''');
         await db.execute('''
@@ -59,6 +61,8 @@ class DbInit {
           'is_available': 1,
           'address': 'Parque Lineal, Guayaquil 090615',
           'price': 40,
+          'latitude': 23.4162,
+          'longitude': 25.6628,
         });
         await db.insert('courts', {
           'title': "Epic Box",
@@ -70,6 +74,8 @@ class DbInit {
           'is_available': 0,
           'address': 'Parque Lineal, Guayaquil 090615',
           'price': 15,
+          'latitude': -3.4653,
+          'longitude': -62.2159,
         });
         await db.insert('courts', {
           'title': "Sport Box",
@@ -81,6 +87,8 @@ class DbInit {
           'is_available': 1,
           'address': 'R4H2+H4X, Av del Periodista, Guayaquil 090512',
           'price': 20,
+          'latitude': 1.3521,
+          'longitude': 103.8198,
         });
         await db.insert('courts', {
           'title': "Sport Box",
@@ -92,6 +100,8 @@ class DbInit {
           'is_available': 0,
           'address': 'R4H2+H4X, Av del Periodista, Guayaquil 090512',
           'price': 25,
+          'latitude': 51.5072,
+          'longitude': 0.1276,
         });
         await db.insert('courts', {
           'title': "Ultimate Box",
@@ -103,6 +113,8 @@ class DbInit {
           'is_available': 1,
           'address': 'R494+VR7, Av. de las Américas, Guayaquil 090512',
           'price': 15,
+          'latitude': 36.5323,
+          'longitude': -116.9325,
         });
         await db.insert('courts', {
           'title': "Ultimate Box",
@@ -114,6 +126,8 @@ class DbInit {
           'is_available': 0,
           'address': 'R494+VR7, Av. de las Américas, Guayaquil 090512',
           'price': 50,
+          'latitude': 19.0760,
+          'longitude': 72.8777,
         });
       },
       onUpgrade: (db, oldVersion, newVersion) async {

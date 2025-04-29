@@ -1,8 +1,10 @@
 import 'package:nolatech/models/court_model.dart';
 import 'package:nolatech/repository/db_init.dart';
+import 'package:nolatech/repository/weather_repository.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CourtRepository extends DbInit {
+  final weatherRepository = WeatherRepository();
   Database? _db;
 
   Future<List<CourtModel>> getAllCourts() async {
@@ -11,7 +13,12 @@ class CourtRepository extends DbInit {
     if (result.isNotEmpty) {
       List<CourtModel> courts =
           result.map((row) => CourtModel.fromMap(row)).toList();
-      return courts;
+      final _courts = List<CourtModel>.from([]);
+      for (CourtModel court in courts) {
+        final weather = await weatherRepository.getDailyPrecipitationMax(court);
+        _courts.add(court.copyWith(weather: weather));
+      }
+      return _courts;
     }
     return [];
   }
@@ -22,7 +29,12 @@ class CourtRepository extends DbInit {
     if (result.isNotEmpty) {
       List<CourtModel> courts =
           result.map((row) => CourtModel.fromMap(row)).toList();
-      return courts;
+      final _courts = List<CourtModel>.from([]);
+      for (CourtModel court in courts) {
+        final weather = await weatherRepository.getDailyPrecipitationMax(court);
+        _courts.add(court.copyWith(weather: weather));
+      }
+      return _courts;
     }
     return [];
   }

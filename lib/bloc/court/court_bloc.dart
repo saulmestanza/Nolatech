@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nolatech/models/court_model.dart';
 import 'package:nolatech/repository/court_repository.dart';
+import 'package:nolatech/repository/weather_repository.dart';
 import 'court_event.dart';
 import 'court_state.dart';
 
 class CourtBloc extends Bloc<CourtEvent, CourtState> {
+  final WeatherRepository weatherRepository = WeatherRepository();
   final CourtRepository courtRepository;
   List<CourtModel> courts = [];
 

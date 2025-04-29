@@ -17,6 +17,10 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
           : emit(ReservationError("No Hay Reservaciones en este momento."));
     });
 
+    on<ConfirmReservation>((event, emit) async {
+      emit(ReservationConfirm());
+    });
+
     on<CreateReservation>((event, emit) async {
       emit(ReservationLoading());
       final reservation = event.reservationModel;

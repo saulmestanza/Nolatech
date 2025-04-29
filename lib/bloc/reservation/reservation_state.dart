@@ -4,6 +4,8 @@ abstract class ReservationState {}
 
 class ReservationLoading extends ReservationState {}
 
+class ReservationConfirm extends ReservationState {}
+
 class ReservationLoaded extends ReservationState {
   final List<ReservationModel> reservations;
   ReservationLoaded(this.reservations);

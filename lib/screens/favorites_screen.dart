@@ -30,12 +30,7 @@ class FavoritesScreen extends StatelessWidget {
                   final court = state.courts[index];
 
                   return CourtWidget(
-                    imageUrl: court.imageUrl!,
-                    title: court.title!,
-                    type: court.type!,
-                    startTime: court.startTime!,
-                    endTime: court.endTime!,
-                    availability: court.isAvailable!,
+                    court: court,
                     onReserve:
                         court.isAvailable!
                             ? () {

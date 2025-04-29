@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nolatech/models/court_model.dart';
 
 class CourtWidget extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String type;
-  final bool availability;
-  final DateTime startTime;
-  final DateTime endTime;
+  final CourtModel court;
   final VoidCallback? onReserve;
 
-  const CourtWidget({
-    super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.type,
-    required this.startTime,
-    required this.availability,
-    required this.endTime,
-    required this.onReserve,
-  });
+  const CourtWidget({super.key, required this.court, required this.onReserve});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +23,7 @@ class CourtWidget extends StatelessWidget {
                 top: Radius.circular(16),
               ),
               child: Image.network(
-                imageUrl,
+                court.imageUrl ?? "",
                 height: 120,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -51,17 +38,28 @@ class CourtWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        title,
+                        court.title ?? "",
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(type, style: TextStyle(color: Colors.grey[600])),
+                      Row(
+                        children: [
+                          Icon(Icons.sunny_snowing, size: 15),
+                          Text(
+                            court.weather ?? "",
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Text(type, style: TextStyle(color: Colors.grey[600])),
+                  Text(
+                    court.type ?? "",
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -72,7 +70,9 @@ class CourtWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('EEEE, d MMM, yyyy').format(startTime),
+                        DateFormat(
+                          'EEEE, d MMM, yyyy',
+                        ).format(court.startTime!),
                         style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                       ),
                     ],
@@ -81,7 +81,7 @@ class CourtWidget extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        availability ? "Disponible" : "No Disponible",
+                        court.isAvailable! ? "Disponible" : "No Disponible",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.green[700],
@@ -96,7 +96,7 @@ class CourtWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        "${DateFormat('Hm').format(startTime)} - ${DateFormat('Hm').format(endTime)}",
+                        "${DateFormat('Hm').format(court.startTime!)} - ${DateFormat('Hm').format(court.endTime!)}",
                         style: TextStyle(fontSize: 14, color: Colors.grey[700]),
                       ),
                     ],

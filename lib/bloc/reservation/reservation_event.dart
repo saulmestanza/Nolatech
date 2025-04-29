@@ -4,6 +4,8 @@ abstract class ReservationEvent {}
 
 class GetAllReservations extends ReservationEvent {}
 
+class ConfirmReservation extends ReservationEvent {}
+
 class CreateReservation extends ReservationEvent {
   final ReservationModel reservationModel;
   CreateReservation(this.reservationModel);
